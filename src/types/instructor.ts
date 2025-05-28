@@ -1,3 +1,4 @@
+// types/instructor.ts
 export interface InstructorResponse {
   id: number;
   fullName: string;
@@ -6,13 +7,14 @@ export interface InstructorResponse {
   phoneNumber: string;
 }
 
+// Изменяем этот интерфейс, чтобы соответствовать FindByIdInstructorResponse из бэкенда
 export interface InstructorDetailResponse {
   id: number;
   fullName: string;
-  email: string;
   specialization: string;
   phoneNumber: string;
-  courseNames: string[];
+  email: string;
+  courseNames: string[]; // Это поле точно совпадает с бэкендом
 }
 
 export interface InstructorRequest {

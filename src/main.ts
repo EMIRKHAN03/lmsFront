@@ -2,8 +2,12 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 import axios from 'axios';
+import { createPinia } from 'pinia';
 
-// Configure axios to use the token in each request
+// Настройка Pinia
+const pinia = createPinia();
+
+// Axios токен
 axios.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
@@ -12,19 +16,14 @@ axios.interceptors.request.use(
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
-// Handle 401 Unauthorized responses globally
+// Глобальный перехват 401
 axios.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
-      // Clear storage and redirect to login
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       router.push('/login');
@@ -33,4 +32,8 @@ axios.interceptors.response.use(
   }
 );
 
-createApp(App).use(router).mount('#app');
+// Создание и подключение приложения
+const app = createApp(App);
+app.use(pinia); // 👈 Обязательно
+app.use(router);
+app.mount('#app');

@@ -1,6 +1,12 @@
+// router/index.ts
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import LoginForm from '@/components/LoginForm.vue';
 import ResetPasswordForm from '@/components/ResetPasswordForm.vue';
+import InstructorView from '@/views/InstructorView.vue';
+import CourseView from '@/views/CourseView.vue';
+import LessonView from '@/views/LessonView.vue';
+import LessonItem from '@/components/LessonItem.vue';
+import TaskView from '@/views/TaskView.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -31,9 +37,64 @@ const routes: Array<RouteRecordRaw> = [
     meta: { requiresAuth: true, role: 'INSTRUCTOR' }
   },
   {
+    path: '/courses',
+    name: 'Courses',
+    component: InstructorView,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/course/:id',
+    name: 'CourseDetails',
+    component: CourseView,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/course/:courseId/lesson/:lessonId',
+    name: 'LessonDetails',
+    component: LessonView,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/course/:courseId/lesson/:lessonId/task/:taskId',
+    name: 'TaskView',
+    component: TaskView,
+    meta: { requiresAuth: true }
+  },
+  {
     path: '/student',
     name: 'Student',
     component: () => import('@/views/StudentView.vue'),
+    meta: { requiresAuth: true, role: 'STUDENT' }
+  },
+  {
+    path: '/lesson',
+    name: 'lesson',
+    component: LessonItem,
+    meta: { requiresAuth: true }
+  },
+  // File Manager Routes
+  {
+    path: '/files',
+    name: 'FileManager',
+    component: () => import('@/views/FileManagerView.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/admin/files',
+    name: 'AdminFiles',
+    component: () => import('@/views/FileManagerView.vue'),
+    meta: { requiresAuth: true, role: 'ADMIN' }
+  },
+  {
+    path: '/instructor/files',
+    name: 'InstructorFiles',
+    component: () => import('@/views/FileManagerView.vue'),
+    meta: { requiresAuth: true, role: 'INSTRUCTOR' }
+  },
+  {
+    path: '/student/files',
+    name: 'StudentFiles',
+    component: () => import('@/views/FileManagerView.vue'),
     meta: { requiresAuth: true, role: 'STUDENT' }
   }
 ];

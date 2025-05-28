@@ -1,11 +1,5 @@
 <template>
   <div id="app">
-    <nav v-if="isLoggedIn" class="navbar">
-      <div class="navbar-brand">LMS System</div>
-      <div class="navbar-menu">
-        <button class="logout-btn" @click="handleLogout">Выйти</button>
-      </div>
-    </nav>
     
     <router-view />
   </div>
